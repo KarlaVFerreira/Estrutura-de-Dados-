@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define TOTAL_ALUNOS 10
+#define MAX_PILHA 5
+
+typedef struct {
+    int matricula;
+    char nome[50];
+    int statusTarefa;
+} Aluno;
+
+typedef struct {
+    Aluno dados[MAX_PILHA];
+    int topo;
+} Pilha;
+
+void inicializarPilha(Pilha *p) {
+    p->topo = -1;
+}
+
+int pilhaCheia(Pilha *p) {
+    return p->topo == MAX_PILHA - 1;
+}
+
+void empilhar(Pilha *p, Aluno a) {
+    if (!pilhaCheia(p)) {
+        p->dados[++(p->topo)] = a;
+    }
+}
+
+void mostrarOrdemApresentacao(Pilha *p) {
+    printf("\n--- Ordem de apresentação dos alunos ---\n");
+    for (int i = 0; i <= p->topo; i++) {
+        printf("%dº - Matrícula: %d | Nome: %s | Tarefa: %s\n",
+               i + 1,
+               p->dados[i].matricula,
+               p->dados[i].nome,
+               p->dados[i].statusTarefa ? "Entregue" : "Não Entregue");
+    }
+}
+
+int main() {
+    Aluno todosAlunos[TOTAL_ALUNOS];
+    Pilha pilha;
+    inicializarPilha(&pilha);
+
+    printf("=== Cadastro de 10 alunos ===\n");
+    for (int i = 0; i < TOTAL_ALUNOS; i++) {
+        printf("\nAluno %d:\n", i + 1);
+        printf("Matrícula: ");
+        scanf("%d", &todosAlunos[i].matricula);
+        getchar(); 
+
+        printf("Nome: ");
+        fgets(todosAlunos[i].nome, sizeof(todosAlunos[i].nome), stdin);
+        todosAlunos[i].nome[strcspn(todosAlunos[i].nome, "\n")] = '\0';
+
+        printf("Tarefa entregue? (1 = Sim, 0 = Não): ");
+        scanf("%d", &todosAlunos[i].statusTarefa);
+        getchar(); 
+    }
+
+    for (int i = 5; i < TOTAL_ALUNOS; i++) {
+        empilhar(&pilha, todosAlunos[i]);
+    }
+
+    mostrarOrdemApresentacao(&pilha);
+
+    return 0;
+}
