@@ -1,0 +1,47 @@
+#include <stdio.h>
+
+#define TAM 6
+
+typedef struct {
+    char nome[50];
+    int codigo;
+    char telefone[15];
+    char email[50];
+} Cliente;
+
+int main() {
+    Cliente clientes[TAM];
+
+    for (int i = 0; i < TAM; i++) {
+        printf("Cadastro do cliente %d\n", i + 1);
+        
+        printf("Nome: ");
+        fgets(clientes[i].nome, 50, stdin);
+
+        printf("Código do Cliente: ");
+        scanf("%d", &clientes[i].codigo);
+        getchar();
+
+        printf("Telefone: ");
+        fgets(clientes[i].telefone, 15, stdin);
+
+        printf("Email: ");
+        fgets(clientes[i].email, 50, stdin);
+        printf("-----------------------------\n");
+    }
+
+    printf("\n===== CLIENTES CADASTRADOS =====\n");
+    for (int i = 0; i < TAM; i++) {
+        printf("Cliente %d:\n", i + 1);
+        printf("Nome: %s", clientes[i].nome);
+        printf("Código: %d\n", clientes[i].codigo);
+        printf("Telefone: %s", clientes[i].telefone);
+        printf("Email: %s", clientes[i].email);
+        printf("-----------------------------\n");
+    }
+
+    printf(">>> Total de %d clientes foram cadastrados com sucesso!\n", TAM);
+    printf("Obrigado por utilizar o sistema de agenda!\n");
+
+    return 0;
+}
